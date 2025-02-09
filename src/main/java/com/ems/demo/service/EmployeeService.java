@@ -10,7 +10,7 @@ public interface EmployeeService {
     public String addEmp(Employee employee);
     public String updateEmp(Employee employee);
     public List<Employee> getAllEmp();
-    public String getById(int id);
+    public Employee getById(int id);
     public void deleteById(int id);
 
 }

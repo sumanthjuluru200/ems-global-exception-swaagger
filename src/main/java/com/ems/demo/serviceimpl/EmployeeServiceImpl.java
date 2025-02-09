@@ -21,17 +21,17 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public String addEmp(Employee employee) {
 
-        Optional<Employee> isExistEmail=employeeRepository.findByEmail(employee.getEmail());
-        Optional<Employee> isExistName=employeeRepository.findByName(employee.getName());
+        Optional<Employee> isExistEmail = employeeRepository.findByEmail(employee.getEmail());
+        Optional<Employee> isExistName = employeeRepository.findByName(employee.getName());
         if (isExistEmail.isPresent()) {
             throw new EmployeeAlreadyExistException("Employee already exist with mail id " + employee.getEmail());
         }
-        if(isExistName.isPresent()){
-            throw new EmployeeAlreadyExistException("Employee already exit with name "+employee.getName());
+        if (isExistName.isPresent()) {
+            throw new EmployeeAlreadyExistException("Employee already exit with name " + employee.getName());
 
-        }else{
+        } else {
             employeeRepository.save(employee);
-            return "Employee Saved Succefully id - "+employee.getId();
+            return "Employee Saved Succefully id - " + employee.getId();
         }
 
     }
@@ -39,14 +39,14 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public String updateEmp(Employee employee) {
 
-        Employee isExistEmployee=employeeRepository.findById(employee.getId()).orElseThrow(()->new NoSuchEmployeeExistsException("No such employee exist with id "+employee.getId()));
+        Employee isExistEmployee = employeeRepository.findById(employee.getId()).orElseThrow(() -> new NoSuchEmployeeExistsException("No such employee exist with id " + employee.getId()));
 
-            isExistEmployee.setName(employee.getName());
-            isExistEmployee.setEmail(employee.getEmail());
-            isExistEmployee.setCity(employee.getCity());
-            employeeRepository.save(isExistEmployee);
-            return "Employee updates succesfully "+employee;
-        }
+        isExistEmployee.setName(employee.getName());
+        isExistEmployee.setEmail(employee.getEmail());
+        isExistEmployee.setCity(employee.getCity());
+        employeeRepository.save(isExistEmployee);
+        return "Employee updates successfully " + employee;
+    }
 
     @Override
     public List<Employee> getAllEmp() {
@@ -54,19 +54,20 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public String getById(int id) {
-        return "";
+    public Employee getById(int id) {
+
+        return employeeRepository.findById(id).orElseThrow(() -> new NoSuchEmployeeExistsException("No Employee found with ID " + id));
     }
 
     @Override
     public void deleteById(int id) {
-        Optional<Employee> isEmployeeExist=employeeRepository.findById(id);
-        if (isEmployeeExist.isPresent()){
+        Optional<Employee> isEmployeeExist = employeeRepository.findById(id);
+        if (isEmployeeExist.isPresent()) {
             employeeRepository.deleteById(id);
-        }else{
-        throw new NoSuchEmployeeExistsException("No such employee exist with id "+id);
-    }
+        } else {
+            throw new NoSuchEmployeeExistsException("No such employee exist with id " + id);
         }
+    }
 
 }
 

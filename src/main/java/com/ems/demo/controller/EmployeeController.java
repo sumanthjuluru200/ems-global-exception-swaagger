@@ -1,7 +1,6 @@
 package com.ems.demo.controller;
 
 import com.ems.demo.entity.Employee;
-import com.ems.demo.repository.EmployeeRepository;
 import com.ems.demo.service.EmployeeService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -34,5 +33,12 @@ public class EmployeeController {
     @Operation(summary = "Get All Employees", description ="Get all employees from the system" )
     public List<Employee> getAllEmployees(){
         return employeeService.getAllEmp();
+    }
+
+    @GetMapping("/getById/{id}")
+    @Operation(summary = "Get Employee", description ="Get employee by ID from the system" )
+    public Employee getById(@PathVariable("id") int id){
+
+        return employeeService.getById(id);
     }
 }
